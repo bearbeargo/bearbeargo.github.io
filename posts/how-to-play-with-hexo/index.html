@@ -1,0 +1,250 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=2"><meta name="theme-color" content="#6c599f"><meta name="generator" content="Hexo 4.2.1"><link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png"><link rel="mask-icon" href="/images/safari-pinned-tab.svg" color="#6c599f"><meta http-equiv="Cache-Control" content="no-transform"><meta http-equiv="Cache-Control" content="no-siteapp"><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="//fonts.googleapis.com/css?family=EB Garamond:300,300italic,400,400italic,700,700italic|Long Cang:300,300italic,400,400italic,700,700italic|Noto Serif SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext"><link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"><link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css"><script id="hexo-configurations">var NexT=window.NexT||{},CONFIG={hostname:"bearbeargo.com",root:"/",scheme:"Gemini",version:"7.8.0",exturl:!1,sidebar:{position:"left",display:"post",padding:18,offset:12,onmobile:!1},copycode:{enable:!0,show_result:!0,style:"mac"},back2top:{enable:!1,sidebar:!1,scrollpercent:!0},bookmark:{enable:!1,color:"#222",save:"auto"},fancybox:!0,mediumzoom:!1,lazyload:!0,pangu:!0,comments:{style:"tabs",active:null,storage:!0,lazyload:!0,nav:null},algolia:{hits:{per_page:10},labels:{input_placeholder:"Search for Posts",hits_empty:"We didn't find any results for the search: ${query}",hits_stats:"${hits} results found in ${time} ms"}},localsearch:{enable:!0,trigger:"auto",top_n_per_article:1,unescape:!1,preload:!1},motion:{enable:!1,async:!1,transition:{post_block:"fadeIn",post_header:"slideDownIn",post_body:"slideDownIn",coll_header:"slideLeftIn",sidebar:"slideUpIn"}},path:"search.xml"}</script><meta name="description" content="之前记录了如何搭建博客、给博客添加评论、如何加速博客访问，然而归根结底，博客还是要被用来写文章、做笔记使用的，这才是前面做的万事所需要的东风。我是在使用 Hexo 之后，才开始用 markdown 写文章做笔记的，那么这次就让我这只小菜鸟分享一下在使用 Hexo 写文的经验和技巧吧~让我们真正滴把博客玩起来！"><meta property="og:type" content="article"><meta property="og:title" content="和你的Hexo博客一起愉快地玩耍吧ヾ(◍°∇°◍)ﾉﾞ"><meta property="og:url" content="https://bearbeargo.com/posts/how-to-play-with-hexo/index.html"><meta property="og:site_name" content="熊熊在咆哮"><meta property="og:description" content="之前记录了如何搭建博客、给博客添加评论、如何加速博客访问，然而归根结底，博客还是要被用来写文章、做笔记使用的，这才是前面做的万事所需要的东风。我是在使用 Hexo 之后，才开始用 markdown 写文章做笔记的，那么这次就让我这只小菜鸟分享一下在使用 Hexo 写文的经验和技巧吧~让我们真正滴把博客玩起来！"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://img.b.cr/bearbeargo/posts/2018/4/how-to-play-with-hexo.jpg"><meta property="og:image" content="https://img.b.cr/bearbeargo/posts/2018/4/good-baby.jpg"><meta property="og:image" content="https://img.b.cr/bearbeargo/posts/2018/4/three-pigs.jpg"><meta property="og:image" content="https://img.b.cr/bearbeargo/posts/2018/4/vscode-terminal.png"><meta property="og:image" content="https://img.b.cr/bearbeargo/posts/2018/4/create-a-post.png"><meta property="og:image" content="https://img.b.cr/bearbeargo/posts/2018/4/tab-on-keyboard.png"><meta property="og:image" content="https://img.b.cr/bearbeargo/posts/2018/4/John-Gruber.jpg"><meta property="og:image" content="https://img.b.cr/bearbeargo/posts/2018/4/arrow-left.png"><meta property="article:published_time" content="2018-09-07T15:00:00.000Z"><meta property="article:modified_time" content="2020-07-01T10:30:07.828Z"><meta property="article:author" content="熊熊"><meta property="article:tag" content="Hexo"><meta property="article:tag" content="writing"><meta property="article:tag" content="post"><meta property="article:tag" content="博客"><meta property="article:tag" content="写作"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://img.b.cr/bearbeargo/posts/2018/4/how-to-play-with-hexo.jpg"><link rel="canonical" href="https://bearbeargo.com/posts/how-to-play-with-hexo/"><script id="page-configurations">CONFIG.page={sidebar:"",isHome:!1,isPost:!0,lang:"zh-CN"}</script><script type="text/javascript">// Live2d
+// 注意：live2d_path 参数应使用绝对路径
+const live2d_path = "https://g.b.cr/bearbeargo/live2d-widget/";
+//const live2d_path = "/live2d/";
+
+// 封装异步加载资源的方法
+function loadExternalResource(url, type) {
+	return new Promise((resolve, reject) => {
+		let tag;
+
+		if (type === "css") {
+			tag = document.createElement("link");
+			tag.rel = "stylesheet";
+			tag.href = url;
+		}
+		else if (type === "js") {
+			tag = document.createElement("script");
+			tag.src = url;
+		}
+		if (tag) {
+			tag.onload = () => resolve(url);
+			tag.onerror = () => reject(url);
+			document.head.appendChild(tag);
+		}
+	});
+}
+
+// 加载 waifu.css live2d.min.js waifu-tips.js
+if (screen.width >= 768) {
+	Promise.all([
+		loadExternalResource(live2d_path + "waifu.css", "css"),
+		loadExternalResource(live2d_path + "live2d.min.js", "js"),
+		loadExternalResource(live2d_path + "waifu-tips.js", "js")
+	]).then(() => {
+		initWidget({
+			waifuPath: live2d_path + "waifu-tips.json",
+			apiPath: "https://api.b.cr/live2d-api/live2d/", // https://live2d.fghrsh.net/api/
+			//cdnPath: "https://cdn.jsdelivr.net/gh/fghrsh/live2d_api/"
+		});
+	});
+}
+// initWidget 第一个参数为 waifu-tips.json 的路径，第二个参数为 API 地址
+// API 后端可自行搭建，参考 https://github.com/fghrsh/live2d_api
+// 初始化看板娘会自动加载指定目录下的 waifu-tips.json
+
+console.log(`
+  く__,.ヘヽ.        /  ,ー､ 〉
+           ＼ ', !-─‐-i  /  /´
+           ／｀ｰ'       L/／｀ヽ､
+         /   ／,   /|   ,   ,       ',
+       ｲ   / /-‐/  ｉ  L_ ﾊ ヽ!   i
+        ﾚ ﾍ 7ｲ｀ﾄ   ﾚ'ｧ-ﾄ､!ハ|   |
+          !,/7 '0'     ´0iソ|    |
+          |.从"    _     ,,,, / |./    |
+          ﾚ'| i＞.､,,__  _,.イ /   .i   |
+            ﾚ'| | / k_７_/ﾚ'ヽ,  ﾊ.  |
+              | |/i 〈|/   i  ,.ﾍ |  i  |
+             .|/ /  ｉ：    ﾍ!    ＼  |
+              kヽ>､ﾊ    _,.ﾍ､    /､!
+              !'〈//｀Ｔ´', ＼ ｀'7'ｰr'
+              ﾚ'ヽL__|___i,___,ンﾚ|ノ
+                  ﾄ-,/  |___./
+                  'ｰ'    !_,.:
+`);
+// End Live2d Code
+
+window.addEventListener('load', () => {
+	console.log('\n%c熊熊在咆哮', 'text-shadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b9, 0 5px 0 #aaa, 0 6px 1px rgba(0, 0, 0, .1), 0 0 5px rgba(0, 0, 0, .1), 0 1px 3px rgba(0, 0, 0, .3), 0 3px 5px rgba(0, 0, 0, .2), 0 5px 10px rgba(0, 0, 0, .25), 0 10px 10px rgba(0, 0, 0, .2), 0 20px 20px rgba(0, 0, 0, .15);\
+font-size: 4em;');
+	console.log('\n%cRoaring Bear%cv3.0.0%c\n', 'padding: 8px; background: #3f5973; font-weight: bold; font-size: large; color: white;', 'padding: 8px; background: #649ab6; font-size: large; color: #eee;','');
+	console.log(`页面加载完毕消耗了${Math.round(performance.now() * 100) / 100}ms`);
+});</script><title>和你的Hexo博客一起愉快地玩耍吧ヾ(◍°∇°◍)ﾉﾞ | 熊熊在咆哮</title><script async src="https://www.googletagmanager.com/gtag/js?id=UA-120626710-1"></script><script data-pjax>if(CONFIG.hostname===location.hostname){function gtag(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","UA-120626710-1")}</script><noscript><style>.sidebar-inner,.use-motion .brand,.use-motion .collection-header,.use-motion .comments,.use-motion .menu-item,.use-motion .pagination,.use-motion .post-block,.use-motion .post-body,.use-motion .post-header{opacity:initial}.use-motion .site-subtitle,.use-motion .site-title{opacity:initial;top:initial}.use-motion .logo-line-before i{left:initial}.use-motion .logo-line-after i{right:initial}</style></noscript><link rel="alternate" href="/atom.xml" title="熊熊在咆哮" type="application/atom+xml">
+</head><body itemscope itemtype="http://schema.org/WebPage"><div class="container"><div class="headband"></div><header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="header-inner"><div class="site-brand-container"><div class="site-nav-toggle"><div class="toggle" aria-label="切换导航栏"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div></div><div class="site-meta"><a href="/" class="brand" rel="start"><span class="logo-line-before"><i></i></span><h1 class="site-title">熊熊在咆哮</h1><span class="logo-line-after"><i></i></span></a><p class="site-subtitle" itemprop="description">栗深林兮 惊层巅兮</p></div><div class="site-nav-right"><div class="toggle popup-trigger"><i class="fa fa-search fa-fw fa-lg"></i></div></div></div><nav class="site-nav"><ul id="menu" class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fas fa-home fa-fw"></i>本站首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-overview"><a href="/overview/" rel="section"><i class="fas fa-th fa-fw"></i>分类总览</a></li><li class="menu-item menu-item-share"><a href="/share/" rel="section"><i class="fas fa-share-alt fa-fw"></i>可盐可甜</a></li><li class="menu-item menu-item-friends"><a href="/friends/" rel="section"><i class="fas fa-heart fa-fw"></i>小伙伴们</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fas fa-location-arrow fa-fw"></i>关于熊熊</a></li><li class="menu-item menu-item-search"><a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索</a></li></ul></nav><div class="search-pop-overlay"><div class="popup search-popup"><div class="search-header"><span class="search-icon"><i class="fa fa-search"></i></span><div class="search-input-container"><input autocomplete="off" autocapitalize="off" placeholder="搜索..." spellcheck="false" type="search" class="search-input"></div><span class="popup-btn-close"><i class="fa fa-times-circle"></i></span></div><div id="search-result"><div id="no-result"><i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i></div></div></div></div></div></header><main class="main"><div class="main-inner"><div class="content-wrap"><div class="content post posts-expand"><article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN"><link itemprop="mainEntityOfPage" href="https://bearbeargo.com/posts/how-to-play-with-hexo/"><span hidden itemprop="author" itemscope itemtype="http://schema.org/Person"><meta itemprop="image" content="https://cdn.v2ex.com/gravatar/26aed4fb721dee66b14c0ae3822f4800?s=200"><meta itemprop="name" content="熊熊"><meta itemprop="description" content="@bearbeargo<br>别提概念，只解决问题"></span><span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization"><meta itemprop="name" content="熊熊在咆哮"></span><header class="post-header"><h1 class="post-title" itemprop="name headline">和你的Hexo博客一起愉快地玩耍吧ヾ(◍°∇°◍)ﾉﾞ</h1><div class="post-meta"><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-calendar"></i> </span><span class="post-meta-item-text">发表于</span> <time title="创建时间：2018-09-07 23:00:00" itemprop="dateCreated datePublished" datetime="2018-09-07T23:00:00+08:00">2018-09-07</time> </span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-folder"></i> </span><span class="post-meta-item-text">分类于</span> <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/overview/technology/" itemprop="url" rel="index"><span itemprop="name">野生技术</span></a> </span></span><span class="post-meta-item"><span class="post-meta-item-icon"><i class="far fa-comment"></i> </span><span class="post-meta-item-text">Valine：</span> <a title="valine" href="/posts/how-to-play-with-hexo/#valine-comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/posts/how-to-play-with-hexo/" itemprop="commentCount"></span></a></span></div></header><div class="post-body" itemprop="articleBody"><p>之前记录了如何搭建博客、给博客添加评论、如何加速博客访问，然而归根结底，博客还是要被用来写文章、做笔记使用的，这才是前面做的万事所需要的东风。<br>我是在使用 Hexo 之后，才开始用 markdown 写文章做笔记的，那么这次就让我这只小菜鸟分享一下在使用 Hexo 写文的经验和技巧吧~让我们真正滴把博客玩起来！</p><a id="more"></a><p><img data-src="//img.b.cr/bearbeargo/posts/2018/4/how-to-play-with-hexo.jpg" alt="Markdown语法"></p><p>最近实在是笔头比较懒，距离写<a href="https://11.tt/posts/2018/set-up-cdn-for-hexo/" target="_blank" rel="noopener">上一篇文章</a>已经有两个多月的时间了QAQ<br>我想着如果再不继续写得话，可能不久于将来这个博客又要荒废了…为了不再次重蹈覆辙！也为了我存了很多的想要和大家分享的内容！让我们高产起来吧！！！</p><p><img data-src="//img.b.cr/bearbeargo/posts/2018/4/good-baby.jpg" alt="励志宝宝"></p><p>另外，有些小伙伴说想要看一些不一样的内容<del>这些都在规划中了哦</del>再有1-2篇关于 Hexo 的内容就要开始写其他杂七杂八的啦！</p><h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>在这篇文章当中，主要会和大家分享一下，我是如何新建文章、如何使用 markdown 的语法撰写文稿、如何在文章中插入图片、如何对图片进行归档、给文章打标签、为文章分类…<br>其实这是一篇早就该发出来的文章，搭建好了博客就像造好了房子，如果不在里面写满精致的文章，就像住在没有装修的毛坯房里，让人很不舒服。<br>那么我们接下来就要给大家介绍一下是如何装修房子的啦！<br>首先，我有一栋这样子条件的毛坯房：</p><ul><li>Windows 10 1803</li><li>node-v8.11.2-x64</li><li>git version 2.17.1.windows.2</li><li>hexo-v3.7.1</li><li>NexT.Muse v6.4.1</li></ul><p>工欲善其事，必先利其器，要想房子精致美丽，也需要高级的材料，就先看看我用了哪些涂料吧：</p><ul><li>Visual Studio Code # 编辑器</li><li>markdownlint # 编辑器插件</li><li>hexo-asset-image # 文章图片插件</li><li>hexo-generator-tag # 标签插件</li></ul><p>其中，Visual Studio Code（以下简称 VS Code）这款编辑器好像很火来着，大家应该都不是很陌生；markdownlint 是 VS Code 的一款扩展，直接搜索安装即可，另外两款是通过 npm 安装的 hexo 插件，详细的解释和使用就让我在接下里的文中说明吧~<br>好的，那么接下来，我要开工啦！</p><p><img data-src="//img.b.cr/bearbeargo/posts/2018/4/three-pigs.jpg" alt="三只小猪"></p><h2 id="如何撰写一篇文章"><a href="#如何撰写一篇文章" class="headerlink" title="如何撰写一篇文章"></a>如何撰写一篇文章</h2><p>在这一章节中，我将从新建文章开始，介绍基本的 markdown 语法，让大家快速上手撰写文章~<br>因为我使用的是 VS Code 编辑器，一些快捷键都将以之为准，如果大家使用的是别的编辑器 or 别的环境，请自行在脑海中转义一下哦！🧙‍</p><h3 id="新建一篇文章"><a href="#新建一篇文章" class="headerlink" title="新建一篇文章"></a>新建一篇文章</h3><p>在撰写文章之前，我们得先有一张能让我们挥洒墨水的白纸，那么我们要怎么样才能获得这样一张白纸呢？<br>那就要介绍一下 hexo 中新建文章、页面和草稿的一句命令：</p><pre><code>hexo new [layout] &lt;title&gt;</code></pre><p>其中，<code>layout</code>可选的参数为：<code>post</code>、<code>page</code>和<code>draft</code>，我们要新建的是文章，所以要选择的 <code>layout</code> 是 <code>post</code>。<br>然后，我们要按下 `ctrl+`` 这个快捷键，打开 VS Code内置的终端，像这样：</p><p><img data-src="//img.b.cr/bearbeargo/posts/2018/4/vscode-terminal.png" alt="VSCode Terminal"></p><p>接下来，如果我们要新建一篇名为 <code>my first post</code> 的文章，那么我们在其中输入以下格式的命令，然后我们会获得新建文章后所创建 markdown 文件的本地路径：</p><pre><code>$ hexo new post &quot;my first post&quot;
+INFO  Created: D:\myblog\source\_posts\my-first-post.md</code></pre><p>从命令执行的输出来看，我们可以很轻松地找到这篇文章在本地的路径，打开后可以看到如下内容：</p><p><img data-src="//img.b.cr/bearbeargo/posts/2018/4/create-a-post.png" alt="创建一篇文章"></p><p>至此，我们的文章已经新建成功啦~<br>请注意，这里生成文章的文件名可以在站点根目录的 <code>_config.yml</code> 中搜索 <code>Writing</code> 进行设置，具体设置方法以及草稿功能可以在官方文档：<a href="https://hexo.io/zh-cn/docs/writing" target="_blank" rel="noopener">写作|Hexo</a>中找到，此处不多加介绍。</p><h3 id="markdown-的基本语法"><a href="#markdown-的基本语法" class="headerlink" title="markdown 的基本语法"></a>markdown 的基本语法</h3><p>这部分将为大家介绍 markdown 中最基本的一些语法，帮助大家快速写出一篇文章。<br>markdown 的语法大部分都非常简单，一般来说，稍微看一看都能迅速写出文章，但如果不了解一下细节处的规则，那么写出来的文章可能会变得乱七八糟。<del>别问我是怎么知道的TAT</del><br>至于绘制公式、流程图这些功能如果我以后用到的话，会提前在该文章前为大家详细介绍，今天嘛~还是尽快入住新房吧！</p><h4 id="标题语法"><a href="#标题语法" class="headerlink" title="标题语法"></a>标题语法</h4><p>标题的语法是这样的：<br>第一级标题，开头就是一个 <code>#</code><br>第二级标题，开头就是两个 <code>#</code><br>第三级标题，开头就是三个 <code>#</code><br>…<br>请注意，<strong>标题需要独自占据一行，并且在标题的文字和 <code>#</code> 之间需要有一个空格</strong>，不然可能会不被识别的哦！<br>另外，在标题的这一行，上下都需要一个空行分割，虽然不是必要的，但某些很迷的时候会导致标题无法识别。<br>如果使用了 markdownlint 插件，它也会勤奋地告诉大家哒！</p><pre><code># 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题
+...再往下可能就不被支持啦！</code></pre><p>同时，大家的主题一般都支持自动生成目录，就像本页的右边→<br><strong>如果大家想要这一类主题的目录生效，请务必使用 <code>#</code> 开头的标题为文章分节哦！</strong></p><h5 id="标题语法演示"><a href="#标题语法演示" class="headerlink" title="标题语法演示"></a>标题语法演示</h5><p>这部分的演示大家就看上面这一堆加粗字并且看起来是标题的吧~同时他们还会显示在右边的目录中，他们就是最好的演示啦！</p><h4 id="引用语法"><a href="#引用语法" class="headerlink" title="引用语法"></a>引用语法</h4><p>大家写着写着文字，突然想要引用一句鲁迅先生的话，但又不是自己说的，于是，这个时候引用语法就派上了用场。<br>引用需要的一个特殊符号是 <code>&gt;</code>，使用方法依旧很简单，<strong>只需要在引用的行首加上 <code>&gt;</code> 就可以啦</strong>！多行引用就在连续的每一行之前都加上 <code>&gt;</code> <del>ヾ(◍°∇°◍)ﾉﾞ<br>需要注意的是，引用也是以行为单位的，在行首加上 <code>&gt;</code> 那么整行都被引用啦</del>在行中加上这个符号是不会出现引用效果的哦！<br>另外，引用行和下方的非引用行之间，如果没有一个空行分割，那么这个非引用行也会被当做引用行哦！</p><pre><code>单行引用：
+&gt; 悲剧将人生的有价值的东西毁灭给人看，喜剧将那无价值的撕破给人看。——鲁迅
+
+多行引用方式一（推荐）：
+&gt; 悲剧将人生的有价值的东西毁灭给人看，喜剧将那无价值的撕破给人看。
+&gt; ————鲁迅
+
+多行引用方式二（不推荐）：
+&gt; 悲剧将人生的有价值的东西毁灭给人看，
+喜剧将那无价值的撕破给人看。
+————鲁迅                            # 这两行由于和上方引用行之间没有空行分隔，也会被当做引用行哦！</code></pre><p>另外，引用是支持嵌套结构的，<strong>只要在该行行首添加更多的 <code>&gt;</code> 数量，即可实现嵌套的功能</strong>：</p><pre><code>引用的嵌套结构：
+&gt; 马云说：鲁迅先生曾经说过：
+&gt;&gt; “悲剧将人生的有价值的东西毁灭给人看，喜剧将那无价值的撕破给人看。”</code></pre><p>这里不讨论这样的引用是否符合语文文法，仅作示例哦~</p><h5 id="引用语法演示"><a href="#引用语法演示" class="headerlink" title="引用语法演示"></a>引用语法演示</h5><p>单行引用：</p><blockquote><p>悲剧将人生的有价值的东西毁灭给人看，喜剧将那无价值的撕破给人看。——鲁迅</p></blockquote><p>多行引用：</p><blockquote><p>悲剧将人生的有价值的东西毁灭给人看，喜剧将那无价值的撕破给人看。<br>——鲁迅</p></blockquote><p>引用的嵌套结构：</p><blockquote><p>马云说：鲁迅先生曾经说过：</p><blockquote><p>“悲剧将人生的有价值的东西毁灭给人看，喜剧将那无价值的撕破给人看。”</p></blockquote></blockquote><h4 id="代码标记语法"><a href="#代码标记语法" class="headerlink" title="代码标记语法"></a>代码标记语法</h4><p>感觉会来捣腾这样一个博客的，基本都会和程序员搭上点边？？？<br>那么，在自己的文章中把代码高亮出来的这种操作一定也是非常常用啦！<br>在这里，和大家分享三种标记代码的方式：行内代码标记、普通代码块标记和高亮代码块标记。</p><h5 id="行内代码标记语法"><a href="#行内代码标记语法" class="headerlink" title="行内代码标记语法"></a>行内代码标记语法</h5><p>行内的标记语法 <strong>需要通过两个 ` 把需要被标记的内容包起来</strong> ，上文中已经有很多用到的例子啦！<br>如果我们要把行内的 hello world 标记出来，我们就需要这么做：</p><pre><code>我要把这行里的 `hello world` 标记出来。</code></pre><h6 id="行内代码标记语法演示"><a href="#行内代码标记语法演示" class="headerlink" title="行内代码标记语法演示"></a>行内代码标记语法演示</h6><p>就像用引号一样使用啦！注意，这个符号就是键盘上在数字 1 左边的那个符号哦！<br><strong>演示：</strong><br>我要把这行里的 <code>hello world</code> 标记出来。</p><h5 id="普通代码块标记语法"><a href="#普通代码块标记语法" class="headerlink" title="普通代码块标记语法"></a>普通代码块标记语法</h5><p>我们只需要将需要标记的代码块选中，然后按下键盘上的 <code>TAB</code> 键，即可完成这段代码的标记.<br><strong>请注意，这样的代码块标记上方和下方都需要一个空行进行分隔，否则会出现各种谜一样的问题哦！</strong><br><code>TAB</code> 键在键盘上的这个位置：</p><p><img data-src="//img.b.cr/bearbeargo/posts/2018/4/tab-on-keyboard.png" alt="TAB在键盘上所在的位置"></p><h6 id="普通代码块标记语法演示"><a href="#普通代码块标记语法演示" class="headerlink" title="普通代码块标记语法演示"></a>普通代码块标记语法演示</h6><p>其实在上方已经出现了很多类似的演示啦！为大家随便复制一段代码作为演示：</p><pre><code>var executeSync = function(){
+  var args = Array.prototype.slice.call(arguments);
+  if (typeof args[0] === &apos;function&apos;){
+    args[0].apply(null, args.splice(1));
+  }
+};</code></pre><h5 id="高亮代码块标记语法"><a href="#高亮代码块标记语法" class="headerlink" title="高亮代码块标记语法"></a>高亮代码块标记语法</h5><p>这种代码标记的方式可以显示行号，并且可以根据你指定的代码语言对代码进行高亮。<br>为了使用这种标记方式，我们需要在代码块的上方和下方各添加一个以三个反引号开头的行，这个符号也是键盘上数字 1 左侧的符号。<br>同样要注意的是，以三个反引号开头的行上方或者下方都需要一个空行进行分隔，否则会出现各种谜一样的问题哦！<br>然后，在开头行的三个反引号后写上代码所使用的语言即可对代码块进行语法高亮：</p><pre><code>这里有三个反引号后面紧跟语法类型
+var executeSync = function(){
+  var args = Array.prototype.slice.call(arguments);
+  if (typeof args[0] === &apos;function&apos;){
+    args[0].apply(null, args.splice(1));
+  }
+};
+这里有三个反引号</code></pre><p>hexo + next 好像有个 bug，在代码块里面三个反引号死活打不出来…大家自行翻译一下~</p><h6 id="高亮代码块标记语法演示"><a href="#高亮代码块标记语法演示" class="headerlink" title="高亮代码块标记语法演示"></a>高亮代码块标记语法演示</h6><p>为了能让这代码块正常显示，真的是让我煞费苦心…</p><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> executeSync = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> args[<span class="number">0</span>] === <span class="string">'function'</span>)&#123;</span><br><span class="line">    args[<span class="number">0</span>].apply(<span class="literal">null</span>, args.splice(<span class="number">1</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><h4 id="列表语法"><a href="#列表语法" class="headerlink" title="列表语法"></a>列表语法</h4><p>往往我们会需要列举一些东西，一二三四五六七什么的，那么我们可以直接使用 <code>[数字].[空格][内容]</code> 的方式来实现：</p><pre><code>1. 你拍一
+2. 我拍二
+3. 她拍三</code></pre><p>如果你不想为他们编号，直接使用 <strong>星号</strong> 代替<code>[数字].</code>即可：</p><pre><code>* 你拍一
+* 我拍二
+* 她拍三</code></pre><h5 id="列表语法演示"><a href="#列表语法演示" class="headerlink" title="列表语法演示"></a>列表语法演示</h5><p>有编号的列表：</p><ol><li>你拍一</li><li>我拍二</li><li>她拍三</li></ol><p>没有编号的列表：</p><ul><li>你拍一</li><li>我拍二</li><li>她拍三</li></ul><h4 id="表格语法"><a href="#表格语法" class="headerlink" title="表格语法"></a>表格语法</h4><p>不得不说，markdown 中的表格语法就是一个坑啊！！！<br>这里 <strong>推荐</strong> 大家使用 html 代码来生成表格…<br><del>但介绍还是要介绍的…</del><br><em>通过查阅<a href="https://daringfireball.net/projects/markdown/syntax" target="_blank" rel="noopener">Markdown 作者的文档</a>，发现实际上并没有表格的语法，所以此段删除。</em></p><h4 id="链接语法"><a href="#链接语法" class="headerlink" title="链接语法"></a>链接语法</h4><p>生成链接的 markdown 语法共有两种，一种是内联式，另一种是引用式。<br>内联式的链接由连续的一对中括号和一对小括号组成，中括号里的内容是链接显示出来的文字，小括号里的内容是链接的地址，写法如下：</p><pre><code>[这是一个链接](https://11.tt)</code></pre><p>而引用式的链接则由像这样连续的两对中括号：</p><pre><code>[这是一个链接][1]</code></pre><p>以及像下方这样在文档任意位置的引用标签组成：</p><pre><code>[1]: https://11.tt</code></pre><p>综合起来，引用式的写法如下：</p><pre><code>[这是一个链接][1]
+[1]: https://11.tt</code></pre><p>此外，如果想要跳转到同一页面中的某个标题处，只需要将链接位置的内容修改为井号加上标题名称即可，像这样：</p><pre><code>[链接语法](#链接语法)</code></pre><p>但是，同一页面中链接无法使用引用式！</p><h5 id="链接语法演示"><a href="#链接语法演示" class="headerlink" title="链接语法演示"></a>链接语法演示</h5><p>无论使用哪一种链接语法，出现的样子都是相同的：<br><a href="https://11.tt" target="_blank" rel="noopener">这是通往本站首页的链接</a><br><a href="#链接语法">这是通往本章头部的链接</a></p><h4 id="插入图片语法"><a href="#插入图片语法" class="headerlink" title="插入图片语法"></a>插入图片语法</h4><p>向文中插入图片的方式和链接是十分类似的，只需要在链接语法前加上一个 <code>!</code> 即可，其中，中括号中的内容是鼠标移到图片上时显示的描述。<br>像这样：</p><pre><code>![Markdown 创始人 John Gruber](John Gruber.jpg)</code></pre><p>也可以是这样：</p><pre><code>![Markdown 创始人 John Gruber][1]
+[1]: John Gruber.jpg</code></pre><h5 id="插入图片语法演示"><a href="#插入图片语法演示" class="headerlink" title="插入图片语法演示"></a>插入图片语法演示</h5><p>两种语法显示的图片都是一样的，照片上是 Markdown 的创始人 John Gruber：</p><p><img data-src="//img.b.cr/bearbeargo/posts/2018/4/John-Gruber.jpg" alt="John Gruber"></p><h5 id="图片插件"><a href="#图片插件" class="headerlink" title="图片插件"></a>图片插件</h5><p>为了更好地整理每一篇文章所使用的图片，我推荐大家使用文章开头提到的 <code>hexo-asset-image</code> 插件。<br>安装方法为：</p><pre><code>$ npm install hexo-asset-image -save
++ hexo-asset-image@0.0.3
+added 13 packages in 6.132s</code></pre><p>当我们安装了这个插件后，每一次通过 <code>hexo new post</code> 命令新建文章时，在文章的相同目录都会建立一个与文章同名的文件夹。<br>在这个文件夹中的图片相对于文章都是相同目录，可以直接使用图片名作为图片链接直接引用该图片。</p><h3 id="生成并发布写好的文章"><a href="#生成并发布写好的文章" class="headerlink" title="生成并发布写好的文章"></a>生成并发布写好的文章</h3><p>其实这一步在我的第一篇文章里面已经做过详细介绍啦！<strong><a href="https://11.tt/posts/2018/set-up-Hexo-with-Coding-Github-https/#%E7%94%9F%E6%88%90%E5%B9%B6%E8%BF%90%E8%A1%8C%E5%8D%9A%E5%AE%A2" target="_blank" rel="noopener">→传送门←</a></strong><br>我们使用命令 <code>hexo g</code> 即可生成我们刚刚写好的文章<br>然后通过命令 <code>hexo d</code> 即可发布到我们的 Coding 或者 Github 的 Pages 服务上去。<br>这里就不详细描述了，忘记的同学可以通过上方的传送门穿越时空去复习哦！</p><h2 id="如何为文章添加分类"><a href="#如何为文章添加分类" class="headerlink" title="如何为文章添加分类"></a>如何为文章添加分类</h2><p>这时候我们需要回到文章的头部，在生成完文章时，hexo 自动为我们的文章头部生成了如下的内容：</p><pre><code>---
+title: my first post
+date: 2018-09-09 16:00:00
+---</code></pre><p>其中，<code>title</code> 是文章的标题，<code>date</code> 是文章的建立时间，都是可以自定义的。<br><em>那么，我们要如何为文章分类呢？</em><br>类似的，我们只需要用到 <code>categories</code> 这个关键词，在冒号后自定义分类名即可，就像下方写的：</p><pre><code>---
+title: my first post
+date: 2018-09-09 16:00:00
+categories: Hexo
+---</code></pre><p>这样我就将 <code>my first post</code> 这篇文章添加到了 <code>Hexo</code> 这个分类当中去了。<br><strong>那么！！</strong>我们又要如何查看这些分类呢？<br>这时候，我们要再次使用到 <code>hexo new</code> 这句命令了。<br>不过和上方新建文章不同的是，这次我们要新建的是一个页面，那么我们要使用的命令是：</p><pre><code>$ hexo new page categories
+INFO  Created: D:\myblog\source\categories\index.md</code></pre><p>同样的，在建立页面完后，输出了页面的路径。<br>这个页面拥有独立的文件夹，以及包含页面内容的 <code>index.md</code> 文件。<br>这时候打开这个页面仍然只是一个普通的页面而已，那该如何让这个页面显示文章分类呢？<br>我们打开刚刚新建的 <code>index.md</code> 文件可以看到如同一片普通文章开头的内容：</p><pre><code>---
+title: categories
+date: 2018-09-10 21:17:08
+---</code></pre><p>我们需要为它添加 <code>type</code> 关键字，让它知道自己到底是个什么身份（笑），就像这样：</p><pre><code>---
+title: categories
+date: 2018-09-10 21:17:08
+type: categories
+comments: false
+---</code></pre><p>其中，<code>comments</code> 关键字是用来设置该页面是否允许评论的，如果你启用了评论功能，那么可以自定义这些页面是否支持评论。<br>然后，在站点的 <code>_config.yml</code> 文件中搜索 <code>category_dir</code> 可以找到如下内容：</p><pre><code>...
+archive_dir: archives
+category_dir: categories
+code_dir: downloads/code
+...</code></pre><p>这里已经设置了文章分类文件夹的名称，如果你的文章分类页不叫 <code>categories</code>，那么你需要将其修改为对应的名称。<br>这时候，再次执行 <code>hexo g &amp;&amp; hexo s</code> 命令，并打开你的页面，点击主题里文章分类的链接，即可看到文章的分类啦！</p><h2 id="如何为文章添加标签"><a href="#如何为文章添加标签" class="headerlink" title="如何为文章添加标签"></a>如何为文章添加标签</h2><p>给文章添加标签的方式和添加分类类似，但一篇文章可以有多个标签。<br>我们需要再次回到文章的头部，如果你已经为文章设置了分类，那么文章头部应该是类似这样的：</p><pre><code>---
+title: my first post
+date: 2018-09-09 16:00:00
+categories: Hexo
+---</code></pre><p>我们只需要向其中再添加一个关键词 <code>tags</code>，这个关键词可以是数组型的，就像这样：</p><pre><code>---
+title: my first post
+date: 2018-09-09 16:00:00
+categories: Hexo
+tags: [Hexo, writing, post, 博客, 写作]
+---</code></pre><p>这样我就为 <code>my first post</code> 这篇文章添加了多个标签。<br><strong>那么！！</strong><del>又来了</del>我们又要如何查看这些标签呢？<br>我们再次使用 <code>hexo new</code> 这句命令新建一个页面：</p><pre><code>$ hexo new page tags
+INFO  Created: D:\myblog\source\tags\index.md</code></pre><p>同样的，在建立页面完后，为 <code>tags\index.md</code> 文件头部添加 <code>type</code> 关键字：</p><pre><code>---
+title: tags
+date: 2018-09-10 21:33:30
+type: tags
+comments: false
+---</code></pre><p>同样可以在在站点的 <code>_config.yml</code> 文件中找到如下内容：</p><pre><code>...
+public_dir: public
+tag_dir: tags
+archive_dir: archives
+...</code></pre><p>可是，当我们再次执行 <code>hexo g &amp;&amp; hexo s</code> 命令后，打开页面主题里文章标签的链接，却并没有看到我们想看到的样子？？？<br>这时候，神奇的插件再次出马了，我们通过命令安装 <code>hexo-generator-tag</code> 插件：</p><pre><code>$ npm install hexo-generator-tag -save
++ hexo-generator-tag@0.2.0
+updated 1 package in 3.599s</code></pre><p>然后，我们再次执行 <code>hexo g &amp;&amp; hexo s</code> 命令，打开页面主题里文章标签的链接，看，是不是看到了好多的标签呀？！<br>其中，<code>hexo-generator-tag</code> 插件能将我们文章中的标签进行统计，并将页面 <code>type</code> 为 <code>tags</code> 的设置为显示标签的页面。</p><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>好啦！今天的分享大会就开到这里！<br>通过这些简单的语法，应该可以应对大部分简单的文章撰写需求啦！<br>顺便，一如既往地，附上官方文档，其实就是作者的博客啦！<a href="https://daringfireball.net/projects/markdown/syntax" target="_blank" rel="noopener">Markdown 作者的文档</a><br>顺带贴上中文版的地址：<a href="https://markdown-zh.readthedocs.io/en/latest/" target="_blank" rel="noopener">Markdown 中文文档</a></p><p>对了！！！你们有没有注意到左下角的神奇魔法呀！！！</p><p><img data-src="//img.b.cr/bearbeargo/posts/2018/4/arrow-left.png" alt="看左下角鸭"></p><p>哈哈哈哈哈哈哈厉害吧！！！୧(๑•̀◡•́๑)૭<br>剧透一下，下一篇文章就教大家如何添加这只哦！！！<br><strong>敬请期待！！</strong></p></div><div class="popular-posts-header">相关推荐</div><ul class="popular-posts"><li class="popular-posts-item"><div class="popular-posts-title"><a href="/posts/set-up-hexo-with-coding-and-github/" rel="bookmark">基于Hexo+Coding+Github搭建个人博客的全过程</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/posts/add-valine-to-your-blog/" rel="bookmark">使用Valine让游客们到你的Hexo博客留个脚印吧</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/posts/set-up-cdn-for-hexo/" rel="bookmark">使用CDN让你的Hexo博客拥有飞一般的体验</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/posts/how-to-play-with-live2d-on-hexo/" rel="bookmark">用Live2D让看板喵入住你的Hexo博客吧\(^o^)/</a></div></li><li class="popular-posts-item"><div class="popular-posts-title"><a href="/posts/how-to-update-hexo-theme-next/" rel="bookmark">教你顺滑升级6.x版本的NexT主题</a></div></li></ul><div class="reward-container"><div>坚持原创！欢迎各位客官给我打赏买🍪小饼干吖！✿✿ヽ(°▽°)ノ✿</div><button onclick='var qr=document.getElementById("qr");qr.style.display="none"===qr.style.display?"block":"none"'><i class="fas fa-qrcode" style="font-size:1.7em;line-height:1.2em"></i></button><div id="qr" style="display:none"><div style="display:inline-block"><img src="https://img.b.cr/bearbeargo/images/wechatpay.png" alt="熊熊 微信支付"><p>微信支付</p></div><div style="display:inline-block"><img src="https://img.b.cr/bearbeargo/images/alipay.png" alt="熊熊 支付宝"><p>支付宝</p></div></div></div><div><ul class="post-copyright"><li class="post-copyright-author"><strong>本文作者： </strong>熊熊</li><li class="post-copyright-link"><strong>本文链接：</strong> <a href="https://bearbeargo.com/posts/how-to-play-with-hexo/" title="和你的Hexo博客一起愉快地玩耍吧ヾ(◍°∇°◍)ﾉﾞ">https://bearbeargo.com/posts/how-to-play-with-hexo/</a></li><li class="post-copyright-license"><strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li></ul></div><footer class="post-footer"><div class="post-tags"><a href="/overview/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a> <a href="/overview/tags/writing/" rel="tag"><i class="fa fa-tag"></i> writing</a> <a href="/overview/tags/post/" rel="tag"><i class="fa fa-tag"></i> post</a> <a href="/overview/tags/%E5%8D%9A%E5%AE%A2/" rel="tag"><i class="fa fa-tag"></i> 博客</a> <a href="/overview/tags/%E5%86%99%E4%BD%9C/" rel="tag"><i class="fa fa-tag"></i> 写作</a></div><div class="post-nav"><div class="post-nav-item"><a href="/posts/set-up-cdn-for-hexo/" rel="prev" title="使用CDN让你的Hexo博客拥有飞一般的体验"><i class="fa fa-chevron-left"></i> 使用CDN让你的Hexo博客拥有飞一般的体验</a></div><div class="post-nav-item"><a href="/posts/how-to-play-with-live2d-on-hexo/" rel="next" title="用Live2D让看板喵入住你的Hexo博客吧\(^o^)/">用Live2D让看板喵入住你的Hexo博客吧\(^o^)/ <i class="fa fa-chevron-right"></i></a></div></div></footer></article></div><div class="comments" id="valine-comments"></div><script>window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }</script></div><div class="toggle sidebar-toggle"><span class="toggle-line toggle-line-first"></span> <span class="toggle-line toggle-line-middle"></span> <span class="toggle-line toggle-line-last"></span></div><aside class="sidebar"><div class="sidebar-inner"><ul class="sidebar-nav motion-element"><li class="sidebar-nav-toc">文章目录</li><li class="sidebar-nav-overview">站点概览</li></ul><div class="post-toc-wrap sidebar-panel"><div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何撰写一篇文章"><span class="nav-text">如何撰写一篇文章</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#新建一篇文章"><span class="nav-text">新建一篇文章</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#markdown-的基本语法"><span class="nav-text">markdown 的基本语法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#标题语法"><span class="nav-text">标题语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#标题语法演示"><span class="nav-text">标题语法演示</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#引用语法"><span class="nav-text">引用语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#引用语法演示"><span class="nav-text">引用语法演示</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码标记语法"><span class="nav-text">代码标记语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#行内代码标记语法"><span class="nav-text">行内代码标记语法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#行内代码标记语法演示"><span class="nav-text">行内代码标记语法演示</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#普通代码块标记语法"><span class="nav-text">普通代码块标记语法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#普通代码块标记语法演示"><span class="nav-text">普通代码块标记语法演示</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#高亮代码块标记语法"><span class="nav-text">高亮代码块标记语法</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#高亮代码块标记语法演示"><span class="nav-text">高亮代码块标记语法演示</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#列表语法"><span class="nav-text">列表语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#列表语法演示"><span class="nav-text">列表语法演示</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#表格语法"><span class="nav-text">表格语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链接语法"><span class="nav-text">链接语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#链接语法演示"><span class="nav-text">链接语法演示</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插入图片语法"><span class="nav-text">插入图片语法</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#插入图片语法演示"><span class="nav-text">插入图片语法演示</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#图片插件"><span class="nav-text">图片插件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生成并发布写好的文章"><span class="nav-text">生成并发布写好的文章</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何为文章添加分类"><span class="nav-text">如何为文章添加分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何为文章添加标签"><span class="nav-text">如何为文章添加标签</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-text">总结</span></a></li></ol></div></div><div class="site-overview-wrap sidebar-panel"><div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person"><img class="site-author-image" itemprop="image" alt="熊熊" src="https://cdn.v2ex.com/gravatar/26aed4fb721dee66b14c0ae3822f4800?s=200"><p class="site-author-name" itemprop="name">熊熊</p><div class="site-description" itemprop="description">@bearbeargo<br>别提概念，只解决问题</div></div><div class="links-of-author motion-element"><span class="links-of-author-item"><a href="https://github.com/bearbeargo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;bearbeargo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a> </span><span class="links-of-author-item"><a href="mailto:b@b.cr" title="E-Mail → mailto:b@b.cr" rel="noopener" target="_blank"><i class="fas fa-envelope fa-fw"></i></a> </span><span class="links-of-author-item"><a href="https://bearbeargo.com/atom.xml" title="RSS → https:&#x2F;&#x2F;bearbeargo.com&#x2F;atom.xml"><i class="fas fa-rss fa-fw"></i></a></span></div></div></div></aside><div id="sidebar-dimmer"></div></div></main><footer class="footer"><div class="footer-inner"><div class="copyright">&copy; 2018 – <span itemprop="copyrightYear">2020</span> <span class="with-love"><i class="fas fa-heartbeat"></i> </span><span class="author" itemprop="copyrightHolder">熊熊</span></div></div></footer></div><script src="//cdn.jsdelivr.net/npm/animejs@3.1.0/lib/anime.min.js"></script><script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script><script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script><script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script><script src="//cdn.jsdelivr.net/npm/lozad@1/dist/lozad.min.js"></script><script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script><script src="/js/utils.js"></script><script src="/js/schemes/pisces.js"></script><script src="/js/next-boot.js"></script><script>var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});</script><script src="/js/local-search.js"></script><div id="pjax"><script>NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/valine@latest/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'cikU5b16f8cP2L3PX01XHByk-MdYXbMMI',
+      appKey     : 'qyarMFzGnwqmCOutjD1EE4x5',
+      placeholder: "ヾﾉ≧∀≦)o来呀，快活呀~（回复提醒通过邮件发送）",
+      avatar     : 'wavatar',
+      meta       : guest,
+      pageSize   : '5' || 10,
+      visitor    : false,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : true,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});</script><script type="text/javascript">if(window.location.hash)var checkExist=setInterval(function(){$(window.location.hash).length&&($("html, body").animate({scrollTop:$(window.location.hash).offset().top-90},1e3),clearInterval(checkExist))},100)</script><div class="moon-menu"><div class="moon-menu-items"><div class="moon-menu-item" onclick="back2bottom()"><i class="fas fa-chevron-down"></i></div><div class="moon-menu-item" onclick="back2top()"><i class="fas fa-chevron-up"></i></div></div><div class="moon-menu-button"><svg class="moon-menu-bg"><circle class="moon-menu-cricle" cx="50%" cy="50%" r="44%"></circle><circle class="moon-menu-border" cx="50%" cy="50%" r="48%"></circle></svg><div class="moon-menu-content"><div class="moon-menu-icon"><i class="fas fa-ellipsis-v"></i></div><div class="moon-menu-text"></div></div></div></div><script src="/js/injector.js"></script></div></body></html>
